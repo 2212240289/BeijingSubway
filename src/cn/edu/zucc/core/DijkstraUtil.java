@@ -33,15 +33,15 @@ public class DijkstraUtil {
 
     }
 
-    public Station getFinStation(HashMap<Station,Station> t){
-        Station res = null;
-
-        for (Station key:t.keySet()){
-            res = t.get(key);
-        }
-
-        return res;
-    }
+//    public Station getFinStation(HashMap<Station,Station> t){
+//        Station res = null;
+//
+//        for (Station key:t.keySet()){
+//            res = t.get(key);
+//        }
+//
+//        return res;
+//    }
 
     public HashMap<Station,Station> getFromtoFin (Routine routine,Station station){
         HashMap<Station,Station> res = new HashMap<>();
@@ -130,7 +130,15 @@ public class DijkstraUtil {
 
             lineStationlist = FileManager.subwayLineinfo.get(key);
 
+            if(lineStationlist.get(0).equals(lineStationlist.get(lineStationlist.size()-1))){
+                lineStationlist.get(0).getLinkStations().add(lineStationlist.get(lineStationlist.size()-2));
+                lineStationlist.get(lineStationlist.size()-2).getLinkStations().add(lineStationlist.get(0));
+                lineStationlist.remove(lineStationlist.size()-1);
+            }
+
+
             for(int i = 0;i<lineStationlist.size();i++){
+
                 station = lineStationlist.get(i);
                 if(allStation.keySet().contains(station.getStationName())){ //ÅÐ¶ÏÊÇ·ñÖØ¸´
                     repeatstation = allStation.get(station.getStationName());
